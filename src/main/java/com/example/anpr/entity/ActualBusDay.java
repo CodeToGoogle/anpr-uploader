@@ -6,8 +6,10 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "outshedding")
-public class OutsheddingEntity {
+@Table(name = "actual_bus_day", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"bus_no", "date"})
+})
+public class ActualBusDay {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +18,7 @@ public class OutsheddingEntity {
     @Column(name = "bus_no", nullable = false)
     private String busNo;
 
-    @Column(nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
     @Column(name = "out_time")
@@ -25,19 +27,16 @@ public class OutsheddingEntity {
     @Column(name = "in_time")
     private LocalTime inTime;
 
-    @Column(name = "morning_route")
-    private String morningRoute;
+    @Column(name = "route_name")
+    private String routeName;
 
-    @Column(name = "morning_route_no")
-    private String morningRouteNo;
+    @Column(name = "route_no")
+    private String routeNo;
 
-    @Column(name = "evening_route")
-    private String eveningRoute;
+    @Column(name = "source_completed")
+    private boolean sourceCompleted = false;
 
-    @Column(name = "evening_route_no")
-    private String eveningRouteNo;
-
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -45,35 +44,22 @@ public class OutsheddingEntity {
         createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public String getBusNo() { return busNo; }
     public void setBusNo(String busNo) { this.busNo = busNo; }
-
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }
-
     public LocalTime getOutTime() { return outTime; }
     public void setOutTime(LocalTime outTime) { this.outTime = outTime; }
-
     public LocalTime getInTime() { return inTime; }
     public void setInTime(LocalTime inTime) { this.inTime = inTime; }
-
-    public String getMorningRoute() { return morningRoute; }
-    public void setMorningRoute(String morningRoute) { this.morningRoute = morningRoute; }
-
-    public String getMorningRouteNo() { return morningRouteNo; }
-    public void setMorningRouteNo(String morningRouteNo) { this.morningRouteNo = morningRouteNo; }
-
-    public String getEveningRoute() { return eveningRoute; }
-    public void setEveningRoute(String eveningRoute) { this.eveningRoute = eveningRoute; }
-
-    public String getEveningRouteNo() { return eveningRouteNo; }
-    public void setEveningRouteNo(String eveningRouteNo) { this.eveningRouteNo = eveningRouteNo; }
-
+    public String getRouteName() { return routeName; }
+    public void setRouteName(String routeName) { this.routeName = routeName; }
+    public String getRouteNo() { return routeNo; }
+    public void setRouteNo(String routeNo) { this.routeNo = routeNo; }
+    public boolean isSourceCompleted() { return sourceCompleted; }
+    public void setSourceCompleted(boolean sourceCompleted) { this.sourceCompleted = sourceCompleted; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
